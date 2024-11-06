@@ -1,0 +1,21 @@
+*/__pycache__/*
+flask-client/node_modules
+flask-client/.pnp
+flask-client/.pnp.js
+flask-client/# testing
+flask-client/coverage
+
+flask-client/# production
+flask-client/build
+
+flask-client/# misc
+flask-client/.DS_Store
+flask-client/.env.local
+flask-client/.env.development.local
+flask-client/.env.test.local
+flask-client/.env.production.local
+
+flask-client/npm-debug.log*
+flask-client/yarn-debug.log*
+flask-client/yarn-error.log*
+

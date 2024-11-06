@@ -2,17 +2,16 @@
 import os
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
-from dotenv import load_dotenv
+import env.py
 
-load_dotenv()
 app = Flask(__name__)
 
 # MongoDB connection details from environment variables
-mongo_host = os.environ.get("MONGODB_HOST", "localhost")
-mongo_port = int(os.environ.get("MONGODB_PORT", 27017))
-mongo_user = os.environ.get("MONGODB_USERNAME")
-mongo_password = os.environ.get("MONGODB_PASSWORD")
-mongo_dbname = os.environ.get("MONGODB_DBNAME")
+mongo_host = env.MONGODB_HOST
+mongo_port = int(env.MONGODB_PORT)
+mongo_user = env.MONGODB_USERNAME
+mongo_password = env.MONGODB_PASSWORD
+mongo_dbname = env.MONGODB_DBNAME
 
 # Create MongoDB client
 mongo_uri = f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/" #{mongo_dbname}
@@ -46,6 +45,6 @@ def get_data():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    flask_host = os.environ.get("FLASK_HOST", "0.0.0.0")
-    flask_port = int(os.environ.get("FLASK_PORT", 5000))
-    app.run(debug=True, host=flask_host, port=flask_port)
+    flask_host = env.FLASK_HOST
+    flask_port = int(env.FLASK_PORT)
+    app.run(debug=env.FLASK_DEBUG, host=flask_host, port=flask_port)
