@@ -1,13 +1,12 @@
-*/__pycache__/*
+Server/__pycache__/*
 flask-client/node_modules
 flask-client/.pnp
 flask-client/.pnp.js
 flask-client/coverage
-./docker-compose-app.yaml
+docker-compose*
 ./docker-compose.yml
 flask-client/# production
 flask-client/build
-./tests/*
 flask-client/.env
 flask-client/# misc
 flask-client/.DS_Store
@@ -18,3 +17,5 @@ flask-client/.env.production.local
 flask-client/npm-debug.log*
 flask-client/yarn-debug.log*
 flask-client/yarn-error.log*
+tests/*
+data/*
