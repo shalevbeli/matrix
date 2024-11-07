@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "matrix.selectorLabels-client" . | nindent 6 }}
+  serviceName: {{ .Values.mongo.serviceName }}
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      namespace: {{ .Values.namespace }}
+      labels:
+        {{- include "matrix.selectorLabels-client" . | nindent 6 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: "mongodb"
+        image: "{{ .Values.client.image.repository }}:{{ .Values.client.image.tag | default .Chart.AppVersion }}"
+        ports:
+        - containerPort: 27017
+          name: database
+        volumeMounts:
+        {{- with .Values.mongo.volumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+  volumeClaimTemplates:
+  {{- with .Values.mongo.volumeClaimTemplates }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}

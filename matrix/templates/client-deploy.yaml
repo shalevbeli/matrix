@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "client"
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "matrix.labels-client" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "matrix.selectorLabels-client" . | nindent 6 }}
+  template:
+    metadata:
+      namespace: {{ .Values.namespace }}
+      labels:
+        {{- include "matrix.labels-client" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: "Application"
+          image: "{{ .Values.client.image.repository }}:{{ .Values.client.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: {{ .Values.client.service.port }}
+              protocol: TCP

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "server"
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "matrix.labels-server" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "matrix.selectorLabels-server" . | nindent 6 }}
+  template:
+    metadata:
+      namespace: {{ .Values.namespace }}
+      labels:
+        {{- include "matrix.labels-server" . | nindent 8 }}
+    spec:
+      containers:
+        - name: "Backend"
+          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
+          ports:
+          - containerPort: {{ .Values.server.service.port }}
+            protocol: TCP

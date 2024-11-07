@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "mongocompass"
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "matrix.labels-mongocompass" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "matrix.selectorLabels-mongocompass" . | nindent 6 }}
+  template:
+    metadata:
+      namespace: {{ .Values.namespace }}
+      labels:
+        {{- include "matrix.labels-mongocompass" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: "compass"
+          image: "{{ .Values.mongocompass.image.repository }}:{{ .Values.mongocompass.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: {{ .Values.mongocompass.service.port }}
+              protocol: TCP

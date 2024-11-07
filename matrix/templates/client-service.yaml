@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "client-service"
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "matrix.labels-client" . | nindent 4 }}
+spec:
+  type: {{ .Values.client.service.type }}
+  ports:
+    - port: {{ .Values.client.service.port }}
+      targetPort: {{ .Values.client.service.targetPort }}
+      protocol: TCP
+      nodePort: {{ .Values.client.service.nodePort }}
+  selector:
+    {{- include "matrix.selectorLabels-client" . | nindent 4 }}

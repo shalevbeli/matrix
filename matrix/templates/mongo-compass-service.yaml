@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "mongocompass-service"
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "matrix.labels-mongocompass" . | nindent 4 }}
+spec:
+  type: {{ .Values.mongocompass.service.type }}
+  ports:
+    - port: {{ .Values.mongocompass.service.port }}
+      targetPort: {{ .Values.mongocompass.service.targetPort }}
+      protocol: TCP
+      nodePort: {{ .Values.mongocompass.service.nodePort }}
+  selector:
+    {{- include "matrix.selectorLabels-mongocompass" . | nindent 4 }}

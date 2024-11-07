@@ -2,20 +2,19 @@
 flask-client/node_modules
 flask-client/.pnp
 flask-client/.pnp.js
-flask-client/# testing
 flask-client/coverage
-.\docker-compose*
+./docker-compose-app.yaml
+./docker-compose.yml
 flask-client/# production
 flask-client/build
 ./tests/*
+flask-client/.env
 flask-client/# misc
 flask-client/.DS_Store
 flask-client/.env.local
 flask-client/.env.development.local
 flask-client/.env.test.local
 flask-client/.env.production.local
-
 flask-client/npm-debug.log*
 flask-client/yarn-debug.log*
 flask-client/yarn-error.log*
-
