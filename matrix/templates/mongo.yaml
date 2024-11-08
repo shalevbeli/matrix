@@ -32,6 +32,10 @@ spec:
         {{- with .Values.mongo.volumeMounts }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+        envFrom:
+            {{- with .Values.mongo.envFrom }}
+            {{- toYaml . | nindent 12}}
+            {{- end }}
 
   volumeClaimTemplates:
   {{- with .Values.mongo.volumeClaimTemplates }}

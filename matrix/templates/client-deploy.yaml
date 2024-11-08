@@ -27,3 +27,7 @@ spec:
           ports:
             - containerPort: {{ .Values.client.service.port }}
               protocol: TCP
+          envFrom:
+            {{- with .Values.client.envFrom }}
+            {{- toYaml . | nindent 12}}
+            {{- end }}

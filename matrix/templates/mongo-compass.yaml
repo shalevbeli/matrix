@@ -25,3 +25,7 @@ spec:
           ports:
             - containerPort: {{ .Values.mongocompass.service.port }}
               protocol: TCP
+          envFrom:
+            {{- with .Values.mongocompass.envFrom }}
+            {{- toYaml . | nindent 12}}
+            {{- end }}
