@@ -14,6 +14,10 @@ client:
     repository: shalevbeli\\client
     tag: "4.0"
 
+  envFrom:
+  - secretRef:
+        name: client
+
   # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
     # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
@@ -27,6 +31,9 @@ client:
 
 # This sets the server arguments
 server: 
+  envFrom:
+  - secretRef:
+        name: server
   image:
     repository: shalevbeli\\server
     tag: "4.0"
@@ -40,6 +47,9 @@ server:
     port: 5000
 
 mongo:
+  envFrom:
+  - secretRef:
+        name: mongo
   serviceName: "mongo-service"
   service:
     # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
@@ -67,6 +77,9 @@ mongo:
           storage: 1Gi
 
 mongocompass:
+  envFrom:
+  - secretRef:
+        name: mongocompass
   image: 
     repository: mongo-express
     tag: "latest"
