@@ -16,7 +16,7 @@ spec:
     metadata:
       namespace: {{ .Values.namespace }}
       labels:
-        {{- include "matrix.selectorLabels-mongo" . | nindent 8 }}
+        {{- include "matrix.labels-mongo" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
