@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install modules
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r Server/requirements.txt
 
 # Run the server
 CMD [ "python", "-m","flask","run", "--host=0.0.0.0"]
