@@ -55,18 +55,17 @@ jobs:
       run: pytest 
 
   build:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs: tests
-    matrix:
-      strategy:
-        matrix:
-          folder: ["./flask-client", "./Server"]
-          image: ["client", "server"]
-          exclude:
-            - folder: "./flask-client"
-              image: "server"
-            - folder: "./Server"
-              image: "client"
+    strategy:
+      matrix:
+        folder: ["./flask-client", "./Server"]
+        image: ["client", "server"]
+        exclude:
+          - folder: "./flask-client"
+            image: "server"
+          - folder: "./Server"
+            image: "client"
         
     steps: 
     - name: Check out files
@@ -87,7 +86,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
       with:
-        images: "shalevbeli/${{ matrox.image }}"
+        images: "shalevbeli/${{ matrix.image }}"
     
     - name: Pushing the image to the repository
       uses: docker/build-push-action@v6.7.0 
