@@ -79,7 +79,7 @@ jobs:
 
     # Build both images using matrix.
     - name: Build the client image
-      run: docker build . --file "${{ matrix.folder }}/Dockerfile" --tag shalevbeli/${{ matrix.image }}:{{ steps.meta.outputs.tags }}
+      run: docker build . --file "${{ matrix.folder }}/Dockerfile" --tag shalevbeli/${{ matrix.image }}:${{ steps.meta.outputs.tags }}
 
     - name: Login to docker hub
       uses: docker/login-action@v3.3.0
