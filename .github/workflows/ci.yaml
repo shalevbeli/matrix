@@ -6,6 +6,12 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_SERVER_URL }}
+      MONGODB_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+      MONGODB_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+      MONGODB_HOST: "localhost"
+
     services:
       mongo:
         image: mongo:latest
@@ -16,11 +22,31 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
 
 
-    # Client Tests
     steps:
+    # Server Tests
     - name: Check out files
       uses: actions/checkout@v4
-                  
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9.20'
+
+    - name: Install Server Dependencies
+      working-directory: ./Server
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Flask server
+      working-directory: ./Server
+      run: python -m flask run --host=0.0.0.0 & # Run Flask app in the background
+
+    - name: Run Server Tests
+      working-directory: ./Server
+      run: pytest 
+
+    # Client Tests                  
     - name: Setup Node.js environment          
       uses: actions/setup-node@v4.1.0
       with: 
@@ -33,22 +59,6 @@ jobs:
     - name: Run Tests
       working-directory: ./flask-client
       run: npm test 
-
-    # Server Tests
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9.20'
-
-    - name: Install Server Dependencies
-      working-directory: ./Server
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run Server Tests
-      working-directory: ./Server
-      run: pytest 
 
   build:
     runs-on: ubuntu-latest
