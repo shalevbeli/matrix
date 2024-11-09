@@ -11,12 +11,12 @@ replicaCount: 1
 client:
   # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
   image:
-    repository: shalevbeli\\client
+    repository: shalevbeli/client
     tag: "4.0"
 
   envFrom:
   - secretRef:
-        name: client
+        name: clientkv
 
   # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
@@ -33,9 +33,9 @@ client:
 server: 
   envFrom:
   - secretRef:
-        name: server
+        name: serverkv
   image:
-    repository: shalevbeli\\server
+    repository: shalevbeli/server
     tag: "4.0"
   service:
     # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
@@ -49,7 +49,7 @@ server:
 mongo:
   envFrom:
   - secretRef:
-        name: mongo
+      name: mongodbkv
   serviceName: "mongo-service"
   service:
     # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
@@ -63,11 +63,11 @@ mongo:
     repository: mongo
     tag: "latest"
   volumeMounts:
-  - name: persistent-db
+  - name: persistentdb
     mountPath: "/data/db"
   volumeClaimTemplates:
   - metdata:
-      name: persistent-db
+      name: persistentdb
     spec: 
       accessModes: 
       - "ReadWriteOnce"
@@ -79,7 +79,7 @@ mongo:
 mongocompass:
   envFrom:
   - secretRef:
-        name: mongocompass
+        name: mongocompasskv
   image: 
     repository: mongo-express
     tag: "latest"

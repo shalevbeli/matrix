@@ -22,7 +22,7 @@ spec:
         {{- end }}
     spec:
       containers:
-        - name: "Application"
+        - name: "application"
           image: "{{ .Values.client.image.repository }}:{{ .Values.client.image.tag | default .Chart.AppVersion }}"
           ports:
             - containerPort: {{ .Values.client.service.port }}

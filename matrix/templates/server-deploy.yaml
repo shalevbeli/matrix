@@ -19,7 +19,7 @@ spec:
         {{- include "matrix.labels-server" . | nindent 8 }}
     spec:
       containers:
-        - name: "Backend"
+        - name: "backend"
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
           ports:
           - containerPort: {{ .Values.server.service.port }}

@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: web
+  name: mongo
   namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
-      {{- include "matrix.selectorLabels-client" . | nindent 6 }}
+      {{- include "matrix.selectorLabels-mongo" . | nindent 6 }}
   serviceName: {{ .Values.mongo.serviceName }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -16,7 +16,7 @@ spec:
     metadata:
       namespace: {{ .Values.namespace }}
       labels:
-        {{- include "matrix.selectorLabels-client" . | nindent 6 }}
+        {{- include "matrix.selectorLabels-mongo" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -24,7 +24,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: "mongodb"
-        image: "{{ .Values.client.image.repository }}:{{ .Values.client.image.tag | default .Chart.AppVersion }}"
+        image: "{{ .Values.mongo.image.repository }}:{{ .Values.mongo.image.tag | default .Chart.AppVersion }}"
         ports:
         - containerPort: 27017
           name: database
