@@ -63,11 +63,11 @@ mongo:
     repository: mongo
     tag: "latest"
   volumeMounts:
-  - name: persistentdb
+  - name: mongo-pvc
     mountPath: "/data/db"
   volumeClaimTemplates:
   - metdata:
-      name: persistentdb
+      name: mongo-pvc
     spec: 
       accessModes: 
       - "ReadWriteOnce"
