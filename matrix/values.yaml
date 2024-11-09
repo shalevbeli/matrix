@@ -12,7 +12,7 @@ client:
   # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
   image:
     repository: shalevbeli/client
-    tag: "latest"
+    tag: "main"
 
   envFrom:
   - secretRef:
@@ -36,7 +36,7 @@ server:
         name: serverkv
   image:
     repository: shalevbeli/server
-    tag: "latest"
+    tag: "main"
   service:
     # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
     type: ClusterIP
