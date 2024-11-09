@@ -1,5 +1,6 @@
 import pytest
 from app import app
+from flask import Flask
 
 # Fixture to set up the Flask app for testing
 @pytest.fixture
