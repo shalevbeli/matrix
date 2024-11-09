@@ -65,7 +65,7 @@ jobs:
     needs: tests
     strategy:
       matrix:
-        folder: ["./flask-client", "./Server"]
+        folder: [flask-client, Server]
         image: ["client", "server"]
         exclude:
           - folder: flask-client
