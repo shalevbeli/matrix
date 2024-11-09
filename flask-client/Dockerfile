@@ -5,13 +5,13 @@ FROM node:20 AS build
 WORKDIR /app
 
 # Copy package.json and package-lock.json to install dependencies
-COPY flask-client/package*.json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the application files
-COPY ./flask-client/* .
+COPY . .
 
 # Build the React application
 RUN npm run build
