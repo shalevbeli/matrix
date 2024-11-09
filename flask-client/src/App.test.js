@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders the app with the expected text', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Welcome to React App/i);
+  const linkElement = screen.getByText(/React Client for Flask API/i);
   expect(linkElement).toBeInTheDocument();
 });
