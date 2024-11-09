@@ -101,9 +101,7 @@ jobs:
         context: ./${{ matrix.folder }}
         file: ./${{ matrix.folder }}/Dockerfile
         push: true
-        tags: |
-          ${{ github.run_number }}.0
-          latest
+        tags: "${{ github.run_number}}.0.0"
         labels: ${{ steps.meta.outputs.labels }}
 
       
