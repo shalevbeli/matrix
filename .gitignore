@@ -19,3 +19,4 @@ flask-client/yarn-debug.log*
 flask-client/yarn-error.log*
 tests/*
 data/*
+myenv/
