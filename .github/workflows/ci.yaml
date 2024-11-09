@@ -98,8 +98,8 @@ jobs:
     - name: Pushing the image to the repository
       uses: docker/build-push-action@v6.7.0 
       with:
-        context: ./${{ matrix.folder }}/
-        file: Dockerfile
+        context: ./${{ matrix.folder }}
+        file: ./${{ matrix.folder }}/Dockerfile
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
