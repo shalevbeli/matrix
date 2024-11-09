@@ -1,8 +1,7 @@
 name: Docker CI
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches: [ "main" ]
     
 jobs:
   tests:
@@ -76,7 +75,7 @@ jobs:
         
     steps: 
     - name: Check out files
-      uses: actions/checkout@v4 
+      uses: actions/checkout@v4    
 
     # Build both images using matrix.
     - name: Build the client image
@@ -102,7 +101,7 @@ jobs:
         context: ./${{ matrix.folder }}
         file: ./${{ matrix.folder }}/Dockerfile
         push: true
-        tags: shalevbeli/${{ matrix.image }}:latest , shalevbeli/${{ matrix.image }}:${{ github.ref_name }}
+        tags: shalevbeli/${{ matrix.image }}:latest , shalevbeli/${{ matrix.image }}:${{ github.run_number }}.0
         labels: ${{ steps.meta.outputs.labels }}
 
       
