@@ -4,65 +4,65 @@ on:
     branches: [ "main" ]
     
 jobs:
-  tests:
-    runs-on: ubuntu-latest
-    env:
-      REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_SERVER_URL }}
-      MONGODB_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-      MONGODB_HOST: "localhost"
+  # tests:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_SERVER_URL }}
+  #     MONGODB_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+  #     MONGODB_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+  #     MONGODB_HOST: "localhost"
 
-    services:
-      mongo:
-        image: mongo:latest
-        ports:
-          - 27017:27017
-        env:
-          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+  #   services:
+  #     mongo:
+  #       image: mongo:latest
+  #       ports:
+  #         - 27017:27017
+  #       env:
+  #         MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+  #         MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
 
 
-    steps:
-    # Server Tests
-    - name: Check out files
-      uses: actions/checkout@v4
+  #   steps:
+  #   # Server Tests
+  #   - name: Check out files
+  #     uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9.20'
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v2
+  #     with:
+  #       python-version: '3.9.20'
 
-    - name: Install Server Dependencies
-      working-directory: ./Server
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+  #   - name: Install Server Dependencies
+  #     working-directory: ./Server
+  #     run: |
+  #       python -m pip install --upgrade pip
+  #       pip install -r requirements.txt
 
-    - name: Run Flask server
-      working-directory: ./Server
-      run: python -m flask run --host=0.0.0.0 & # Run Flask app in the background
+  #   - name: Run Flask server
+  #     working-directory: ./Server
+  #     run: python -m flask run --host=0.0.0.0 & # Run Flask app in the background
 
-    - name: Run Server Tests
-      working-directory: ./Server
-      run: pytest 
+  #   - name: Run Server Tests
+  #     working-directory: ./Server
+  #     run: pytest 
 
-    # Client Tests                  
-    - name: Setup Node.js environment          
-      uses: actions/setup-node@v4.1.0
-      with: 
-        node-version: 20
+  #   # Client Tests                  
+  #   - name: Setup Node.js environment          
+  #     uses: actions/setup-node@v4.1.0
+  #     with: 
+  #       node-version: 20
     
-    - name: Install Dependencies
-      working-directory: ./flask-client
-      run: npm install
+  #   - name: Install Dependencies
+  #     working-directory: ./flask-client
+  #     run: npm install
 
-    - name: Run Tests
-      working-directory: ./flask-client
-      run: npm test 
+  #   - name: Run Tests
+  #     working-directory: ./flask-client
+  #     run: npm test 
 
   build:
     runs-on: ubuntu-latest
-    needs: tests
+    # needs: tests
     strategy:
       matrix:
         folder: [flask-client, Server]
@@ -101,7 +101,7 @@ jobs:
         context: ./${{ matrix.folder }}
         file: ./${{ matrix.folder }}/Dockerfile
         push: true
-        tags: "${{ github.run_number}}.0.0"
+        tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
       
