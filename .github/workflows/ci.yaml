@@ -14,11 +14,7 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
           MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-        options: >-
-          --health-cmd mongo
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+
 
     # Client Tests
     steps:
@@ -80,7 +76,7 @@ jobs:
       uses: docker/login-action@v3.3.0
       with: 
         username: shalevbeli
-        password: ${{ secrets.docker_pass }}
+        password: ${{ secrets.DOCKER_PASS }}
     
     - name: Extract metadata (tags, labels) for Docker
       id: meta
