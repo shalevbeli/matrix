@@ -11,7 +11,7 @@ COPY flask-client/package*.json ./
 RUN npm install
 
 # Copy the rest of the application files
-COPY ./flask-client .
+COPY ./flask-client/* .
 
 # Build the React application
 RUN npm run build
