@@ -11,6 +11,5 @@ spec:
     - port: {{ .Values.client.service.port }}
       targetPort: {{ .Values.client.service.targetPort }}
       protocol: TCP
-      nodePort: {{ .Values.client.service.nodePort }}
   selector:
     {{- include "matrix.selectorLabels-client" . | nindent 4 }}

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: client-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.clusterissuer.name }}
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - "test-app.com"
+    secretName: matrix-tls
+  rules:
+    - host: "test-app.com"
+      http: 
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: client-service
+                port:
+                  number: 80

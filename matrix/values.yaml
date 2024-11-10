@@ -21,11 +21,9 @@ client:
   # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
     # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-    type: NodePort
+    type: ClusterIP
     # This sets the target port that the pod is using
     targetPort: 80
-    #This sets the nodePort later to be used via ingress resource
-    nodePort: 30020
     # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
     port: 80
 
@@ -128,3 +126,6 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
+
+clusterissuer:
+  name: selfsigned-issuer
